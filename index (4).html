@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>GrowthGulp | Websites, apps, CRMs, automation and 0 to 1 strategy</title>
+<meta name="description" content="GrowthGulp builds websites, apps, custom CRMs, integrations and WhatsApp automation, and helps founders take products from 0 to 1 with strategy and marketing.">
+<meta name="keywords" content="website development, app development, integration, workflow automation, custom CRM, product development, startup strategy, WhatsApp API, digital marketing, SEO">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='28' fill='%23FFC72C'/><circle cx='50' cy='56' r='22' fill='%235B2E73'/><circle cx='50' cy='30' r='9' fill='%23FFFFFF'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FFFFFF;
+    --surface: #FFFFFF;
+    --ink: #24142E;
+    --ink-soft: #645670;
+    --plum: #5B2E73;
+    --plum-deep: #2E1A3B;
+    --yellow: #FFC72C;
+    --line: #E9E1EE;
+    --tint: #F6F1F9;
+    --on-plum: #FFFFFF;
+    --shadow: 0 18px 50px rgba(46, 26, 59, .12);
+    color-scheme: light;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1A1022;
+      --surface: #241730;
+      --ink: #F5EEF8;
+      --ink-soft: #BBAAC6;
+      --plum: #9A5FBD;
+      --plum-deep: #2E1A3B;
+      --yellow: #FFCF4A;
+      --line: #3B2A48;
+      --tint: #2B1D37;
+      --on-plum: #FFFFFF;
+      --shadow: 0 18px 50px rgba(0, 0, 0, .4);
+      color-scheme: dark;
+    }
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: calc(env(safe-area-inset-top, 0px) + 84px); }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: "Manrope", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 1.0625rem; line-height: 1.6; -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--yellow); outline-offset: 3px; border-radius: 8px; }
+  h1, h2, h3 { font-family: "Unbounded", "Manrope", system-ui, sans-serif; margin: 0; line-height: 1.12; letter-spacing: -0.02em; }
+  .wrap { width: min(1160px, 100% - 2.5rem); margin-inline: auto; }
+  .ico { width: 24px; height: 24px; flex: none; }
+
+  /* Header */
+  body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+  header { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 9; background: var(--bg); border-bottom: 1px solid var(--line); }
+  .nav { height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+  .logo { display: flex; align-items: center; gap: .6rem; text-decoration: none; font-family: "Unbounded", sans-serif; font-weight: 700; font-size: 1.15rem; }
+  .logo svg { width: 34px; height: 34px; }
+  .nav ul { list-style: none; display: flex; gap: 1.8rem; margin: 0; padding: 0; }
+  .nav ul a { text-decoration: none; font-weight: 600; color: var(--ink-soft); }
+  .nav ul a:hover { color: var(--ink); }
+
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: .55rem; padding: .85rem 1.4rem; border-radius: 14px; border: 0; cursor: pointer; font: 700 1rem "Manrope", sans-serif; text-decoration: none; transition: transform .15s ease, filter .15s ease; }
+  .btn:hover { filter: brightness(1.06); }
+  .btn:active { transform: translateY(1px); }
+  .btn-yellow { background: var(--yellow); color: #24142E; }
+  .btn-plum { background: var(--plum); color: var(--on-plum); }
+  .btn-line { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 2px var(--line); }
+  .btn-line:hover { box-shadow: inset 0 0 0 2px var(--ink); }
+  .btn .ico { width: 20px; height: 20px; }
+
+  /* Hero */
+  .hero { padding: clamp(3rem, 6vw, 5rem) 0 clamp(3.5rem, 7vw, 6rem); }
+  .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 4rem); align-items: center; }
+  .hero h1 { font-size: clamp(2.3rem, 5vw, 4.1rem); font-weight: 800; }
+  .hero .lead { font-size: clamp(1.08rem, 1.5vw, 1.25rem); max-width: 44ch; color: var(--ink-soft); margin: 1.4rem 0 2rem; }
+  .hero-actions { display: flex; gap: .8rem; flex-wrap: wrap; }
+  .hero-tags { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 2rem; padding: 0; list-style: none; }
+  .hero-tags li { font-size: .9rem; font-weight: 600; padding: .35rem .8rem; border-radius: 999px; background: var(--tint); color: var(--ink-soft); }
+
+  /* Hero product collage */
+  .mock { position: relative; aspect-ratio: 6 / 5; width: 100%; max-width: 560px; margin-inline: auto; }
+  .browser { position: absolute; left: 0; top: 4%; width: 84%; background: var(--surface); border: 1.5px solid var(--line); border-radius: 18px; box-shadow: var(--shadow); overflow: hidden; }
+  .browser-bar { display: flex; align-items: center; gap: .4rem; padding: .7rem .9rem; border-bottom: 1.5px solid var(--line); background: var(--tint); }
+  .browser-bar i { width: 10px; height: 10px; border-radius: 50%; background: var(--line); display: block; }
+  .browser-bar span { margin-left: .6rem; font-size: .75rem; color: var(--ink-soft); background: var(--surface); padding: .15rem .7rem; border-radius: 999px; }
+  .crm { padding: 1rem 1.1rem 1.2rem; }
+  .crm-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: .8rem; }
+  .crm-head strong { font-family: "Unbounded", sans-serif; font-size: .95rem; }
+  .crm-head em { font-style: normal; font-size: .72rem; font-weight: 700; background: var(--plum); color: var(--on-plum); padding: .2rem .6rem; border-radius: 999px; }
+  .row { display: grid; grid-template-columns: 1.2fr 1fr .9fr; gap: .5rem; align-items: center; padding: .55rem 0; border-top: 1px solid var(--line); font-size: .8rem; }
+  .row b { font-weight: 700; }
+  .row span { color: var(--ink-soft); }
+  .pill { justify-self: start; font-size: .7rem; font-weight: 700; padding: .15rem .55rem; border-radius: 999px; background: var(--tint); color: var(--plum); }
+  .pill.won { background: var(--yellow); color: #24142E; }
+  .phone { position: absolute; right: 0; bottom: 0; width: 38%; background: var(--plum-deep); border-radius: 30px; padding: 8px; box-shadow: var(--shadow); }
+  .phone-screen { background: var(--surface); border-radius: 23px; padding: .9rem .7rem; display: grid; gap: .5rem; }
+  .phone-screen strong { font-family: "Unbounded", sans-serif; font-size: .8rem; }
+  .order { background: var(--tint); border-radius: 12px; padding: .5rem .6rem; font-size: .7rem; line-height: 1.35; }
+  .order b { display: block; font-size: .75rem; }
+  .phone-btn { background: var(--plum); color: var(--on-plum); border-radius: 10px; text-align: center; font-size: .72rem; font-weight: 700; padding: .45rem; }
+  .chip { position: absolute; left: 6%; bottom: 8%; display: flex; align-items: center; gap: .6rem; background: var(--yellow); color: #24142E; padding: .7rem 1rem; border-radius: 16px; box-shadow: var(--shadow); font-size: .85rem; font-weight: 700; line-height: 1.25; animation: chip .6s cubic-bezier(.2,.9,.3,1.3) .8s both; }
+  .chip small { display: block; font-weight: 500; font-size: .75rem; }
+  @keyframes chip { from { opacity: 0; transform: translateY(14px) scale(.92); } to { opacity: 1; transform: none; } }
+
+  /* Sections */
+  section { padding: clamp(4rem, 8vw, 6.5rem) 0; }
+  .head { max-width: 44rem; margin-bottom: clamp(2rem, 4vw, 3rem); }
+  .head h2 { font-size: clamp(1.8rem, 3.8vw, 2.8rem); font-weight: 800; }
+  .head p { color: var(--ink-soft); margin: 1rem 0 0; font-size: 1.12rem; }
+
+  /* Who we help */
+  .audience { padding-top: 0; }
+  .aud-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+  .aud { border-radius: 28px; padding: clamp(1.8rem, 4vw, 2.8rem); display: flex; flex-direction: column; }
+  .aud-founder { background: var(--plum-deep); color: #FFFFFF; }
+  .aud-business { background: var(--tint); }
+  .aud .tag { align-self: flex-start; font-size: .85rem; font-weight: 700; padding: .3rem .8rem; border-radius: 999px; margin-bottom: 1.2rem; }
+  .aud-founder .tag { background: var(--yellow); color: #24142E; }
+  .aud-business .tag { background: var(--plum); color: var(--on-plum); }
+  .aud h3 { font-size: clamp(1.4rem, 2.6vw, 1.9rem); margin-bottom: .9rem; }
+  .aud p { margin: 0 0 1.4rem; max-width: 44ch; }
+  .aud-founder p { color: #E3D6EA; }
+  .aud-business p { color: var(--ink-soft); }
+  .aud ul { list-style: none; margin: 0 0 1.8rem; padding: 0; display: grid; gap: .6rem; }
+  .aud li { display: flex; gap: .65rem; font-weight: 600; }
+  .aud li .ico { width: 22px; height: 22px; }
+  .aud-founder li .ico { color: var(--yellow); }
+  .aud-business li .ico { color: var(--plum); }
+  .aud .btn { margin-top: auto; align-self: flex-start; }
+  .aud-founder .btn-line { color: #FFFFFF; box-shadow: inset 0 0 0 2px rgba(255,255,255,.5); }
+  .aud-founder .btn-line:hover { box-shadow: inset 0 0 0 2px #FFFFFF; }
+
+  /* Services, grouped */
+  #services { border-top: 1px solid var(--line); }
+  .group { display: grid; grid-template-columns: 260px 1fr; gap: 2rem; padding: 2.2rem 0; border-top: 1px solid var(--line); }
+  .group:first-of-type { border-top: 0; padding-top: 0; }
+  .group-name h3 { font-size: 1.6rem; color: var(--plum); }
+  .group-name p { margin: .5rem 0 0; color: var(--ink-soft); font-size: .98rem; }
+  .svc-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; }
+  .svc { border: 1.5px solid var(--line); border-radius: 20px; padding: 1.5rem; background: var(--surface); }
+  .svc-ico { width: 48px; height: 48px; border-radius: 14px; background: var(--yellow); color: #24142E; display: grid; place-items: center; margin-bottom: 1rem; }
+  .svc h4 { font-family: "Unbounded", sans-serif; font-size: 1.08rem; margin: 0 0 .5rem; letter-spacing: -0.01em; }
+  .svc p { margin: 0 0 .9rem; color: var(--ink-soft); font-size: .98rem; }
+  .svc ul { margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: .4rem; }
+  .svc li { font-size: .82rem; font-weight: 600; background: var(--tint); padding: .25rem .65rem; border-radius: 999px; }
+
+  /* Message builder */
+  .builder { background: var(--tint); }
+  .builder-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 4rem); align-items: start; }
+  fieldset { border: 0; padding: 0; margin: 0 0 1.6rem; }
+  legend { font-family: "Unbounded", sans-serif; font-weight: 700; font-size: 1.05rem; margin-bottom: .8rem; padding: 0; }
+  .options { display: flex; flex-wrap: wrap; gap: .5rem; }
+  .options input { position: absolute; opacity: 0; pointer-events: none; }
+  .options label { padding: .6rem 1rem; border-radius: 999px; background: var(--surface); border: 2px solid var(--line); font-weight: 600; cursor: pointer; user-select: none; }
+  .options input:checked + label { background: var(--plum); border-color: var(--plum); color: var(--on-plum); }
+  .options input:focus-visible + label { outline: 3px solid var(--yellow); outline-offset: 2px; }
+  .preview { background: #E5DDD5; border-radius: 24px; padding: 1.5rem; position: sticky; top: 100px; }
+  .preview-title { font-weight: 700; font-size: .9rem; color: #54656F; margin: 0 0 .8rem; }
+  .bubble { background: #D9FDD3; color: #111B21; border-radius: 14px 4px 14px 14px; padding: .8rem 1rem; margin-left: auto; max-width: 92%; white-space: pre-wrap; font-size: .98rem; line-height: 1.5; min-height: 3rem; }
+  @media (prefers-color-scheme: dark) {
+    .preview { background: #0B141A; }
+    .preview-title { color: #8696A0; }
+    .bubble { background: #005C4B; color: #E9EDEF; }
+  }
+  .preview .btn { width: 100%; margin-top: 1.2rem; background: #25D366; color: #0B141A; }
+
+  /* Process: horizontal timeline */
+  .steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; counter-reset: s; position: relative; }
+  .steps::before { content: ""; position: absolute; top: 22px; left: 22px; right: 22px; height: 2px; background: var(--line); }
+  .steps li { counter-increment: s; position: relative; }
+  .steps li::before { content: counter(s); position: relative; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: var(--yellow); color: #24142E; font: 800 1.05rem "Unbounded", sans-serif; margin-bottom: 1.1rem; box-shadow: 0 0 0 6px var(--bg); }
+  .steps h3 { font-size: 1.1rem; margin-bottom: .5rem; }
+  .steps p { margin: 0; color: var(--ink-soft); font-size: 1rem; }
+
+  /* FAQ */
+  #faq { border-top: 1px solid var(--line); }
+  .faq-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: clamp(2rem, 5vw, 4rem); }
+  details { border-bottom: 1.5px solid var(--line); }
+  details:first-child { border-top: 1.5px solid var(--line); }
+  summary { cursor: pointer; list-style: none; padding: 1.2rem 2.5rem 1.2rem 0; font-weight: 700; font-size: 1.08rem; position: relative; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; position: absolute; right: .3rem; top: 50%; transform: translateY(-50%); font: 700 1.5rem "Unbounded", sans-serif; color: var(--plum); transition: transform .2s ease; }
+  details[open] summary::after { transform: translateY(-50%) rotate(45deg); }
+  details p { margin: 0 0 1.2rem; color: var(--ink-soft); max-width: 62ch; }
+
+  /* Contact */
+  .contact { padding-top: 0; }
+  .contact-card { background: var(--plum-deep); color: #FFFFFF; border-radius: 32px; padding: clamp(2rem, 6vw, 4.5rem); display: grid; grid-template-columns: 1.3fr 1fr; gap: 2rem; align-items: center; }
+  .contact-card h2 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; }
+  .contact-card p { color: #E3D6EA; margin: 1rem 0 0; font-size: 1.12rem; max-width: 40ch; }
+  .contact-actions { display: grid; gap: .8rem; }
+  .contact-actions .btn { padding: 1rem 1.4rem; }
+  .contact-actions .btn-line { color: #FFFFFF; box-shadow: inset 0 0 0 2px rgba(255,255,255,.5); }
+  .contact-actions .btn-line:hover { box-shadow: inset 0 0 0 2px #FFFFFF; }
+  .contact-actions a.mail { color: #E3D6EA; text-align: center; font-weight: 600; text-underline-offset: 4px; }
+
+  footer { border-top: 1px solid var(--line); padding: 2rem 0; color: var(--ink-soft); font-size: .95rem; }
+  footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+  footer nav { display: flex; gap: 1.4rem; flex-wrap: wrap; }
+  footer a { text-decoration: none; }
+  footer a:hover { color: var(--ink); }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .chip { animation: none; }
+  }
+  @media (max-width: 960px) {
+    .hero-grid, .aud-grid, .builder-grid, .contact-card, .faq-grid { grid-template-columns: 1fr; }
+    .group { grid-template-columns: 1fr; gap: 1.2rem; }
+    .preview { position: static; }
+    .steps { grid-template-columns: 1fr 1fr; row-gap: 2rem; }
+    .steps::before { display: none; }
+  }
+  @media (max-width: 680px) {
+    .nav ul { display: none; }
+    .steps { grid-template-columns: 1fr; }
+    .mock { aspect-ratio: 1 / 1; }
+    .browser { width: 92%; }
+    .phone { width: 44%; }
+    .row { font-size: .72rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Icon set -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-mega" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5v3a1 1 0 0 0 1 1h2.5L12 19V5L6.5 9.5H4a1 1 0 0 0-1 1Z"/><path d="M15.5 9a4 4 0 0 1 0 6"/><path d="M18.5 6a8 8 0 0 1 0 12"/></g></symbol>
+    <symbol id="i-monitor" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="3.5" width="19" height="13" rx="2"/><path d="M8 21h8M12 16.5V21"/></g></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 12a8.5 8.5 0 0 1-12.4 7.6L3.5 21l1.4-4.4A8.5 8.5 0 1 1 20.5 12Z"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01"/></g></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.2 2.7 2.7L16 9.5"/></g></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6.5" y="2.5" width="11" height="19" rx="2.5"/><path d="M11 18h2"/></g></symbol>
+    <symbol id="i-flow" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="3" width="7" height="6" rx="1.5"/><rect x="14.5" y="15" width="7" height="6" rx="1.5"/><path d="M9.5 6h4a3 3 0 0 1 3 3v6"/><path d="m14.5 12.5 2 2.5 2-2.5"/></g></symbol>
+    <symbol id="i-crm" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="3.5" width="19" height="17" rx="2"/><path d="M2.5 8.5h19M8.5 8.5v12"/><path d="M12 12.5h6M12 16h4"/></g></symbol>
+    <symbol id="i-rocket" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.5 16.5 7.5 11.5C9.5 6 13.5 3 20.5 3.5 21 10.5 18 14.5 12.5 16.5Z"/><path d="M7.5 11.5H4l2.5-4H11M12.5 16.5V20l4-2.5V13"/><path d="M6 15.5c-1.5 1-2 3.5-2 4.5 1 0 3.5-.5 4.5-2"/><circle cx="15.5" cy="8.5" r="1.5"/></g></symbol>
+    <symbol id="i-form" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="2.5" width="15" height="19" rx="2"/><path d="M8.5 7.5h7M8.5 11.5h7M8.5 15.5h4"/></g></symbol>
+    <symbol id="i-wa" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></symbol>
+  </defs>
+</svg>
+
+<header>
+  <nav class="wrap nav" aria-label="Main">
+    <a href="#top" class="logo" aria-label="GrowthGulp home">
+      <svg viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" rx="28" fill="#FFC72C"/><circle cx="50" cy="56" r="22" fill="#5B2E73"/><circle cx="50" cy="30" r="9" fill="#fff"/></svg>
+      GrowthGulp
+    </a>
+    <ul>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#process">How we work</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <a class="btn btn-yellow" href="https://forms.gle/BAhZ6Udea1EGyAsY9" target="_blank" rel="noopener">Contact us</a>
+  </nav>
+</header>
+
+<main id="top">
+  <!-- Hero -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <h1>We build the tech your business grows on.</h1>
+        <p class="lead">Websites, apps, custom CRMs and automations, plus the strategy and marketing to make them work. One team from first idea to first thousand customers.</p>
+        <div class="hero-actions">
+          <a class="btn btn-plum" href="https://forms.gle/BAhZ6Udea1EGyAsY9" target="_blank" rel="noopener">Start a project</a>
+          <a class="btn btn-line" href="#services">Explore services</a>
+        </div>
+        <ul class="hero-tags" aria-label="What we do">
+          <li>Websites</li><li>Apps</li><li>Custom CRM</li><li>Integrations</li><li>WhatsApp API</li><li>0 to 1 strategy</li><li>SEO &amp; ads</li>
+        </ul>
+      </div>
+
+      <div class="mock" role="img" aria-label="Example of what we build: a custom CRM showing incoming leads, a mobile ordering app, and a new-lead alert from WhatsApp">
+        <div class="browser" aria-hidden="true">
+          <div class="browser-bar"><i></i><i></i><i></i><span>crm.yourbusiness.com</span></div>
+          <div class="crm">
+            <div class="crm-head"><strong>Leads</strong><em>12 new today</em></div>
+            <div class="row"><b>Priya S.</b><span>WhatsApp</span><span class="pill won">Won</span></div>
+            <div class="row"><b>Rahul M.</b><span>Website</span><span class="pill">Call booked</span></div>
+            <div class="row"><b>Anita K.</b><span>Google Ads</span><span class="pill">New</span></div>
+            <div class="row"><b>Vikram R.</b><span>App</span><span class="pill">Quote sent</span></div>
+          </div>
+        </div>
+        <div class="phone" aria-hidden="true">
+          <div class="phone-screen">
+            <strong>My orders</strong>
+            <div class="order"><b>Order #2041</b>Out for delivery</div>
+            <div class="order"><b>Order #2038</b>Delivered</div>
+            <div class="phone-btn">Reorder</div>
+          </div>
+        </div>
+        <div class="chip" aria-hidden="true">
+          <svg class="ico" aria-hidden="true"><use href="#i-wa"/></svg>
+          <div>New lead from WhatsApp<small>Added to CRM automatically</small></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Who we help -->
+  <section class="audience">
+    <div class="wrap aud-grid">
+      <article class="aud aud-founder">
+        <span class="tag">For founders</span>
+        <h3>Have an idea? Let’s take it from 0 to 1.</h3>
+        <p>We help you shape the idea, decide what to build first, launch an MVP and find your first paying customers, without wasting money on the wrong things.</p>
+        <ul>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Idea validation and product strategy</li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>MVP scope, roadmap and tech choices</li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Build, launch and go-to-market</li>
+        </ul>
+        <a class="btn btn-line" href="#g-grow">See 0 to 1 strategy</a>
+      </article>
+      <article class="aud aud-business">
+        <span class="tag">For growing businesses</span>
+        <h3>Running a business? Let’s make it run smoother.</h3>
+        <p>We replace manual work and scattered tools with websites, apps and systems that bring in leads and keep your team in sync.</p>
+        <ul>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Websites and apps that bring in enquiries</li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Custom CRM and connected workflows</li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>WhatsApp automation and marketing</li>
+        </ul>
+        <a class="btn btn-plum" href="#g-build">See what we build</a>
+      </article>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section id="services">
+    <div class="wrap">
+      <div class="head">
+        <h2>Our services</h2>
+        <p>Pick one, or bring us the whole project. Everything we build is made to connect.</p>
+      </div>
+
+      <div class="group" id="g-build">
+        <div class="group-name"><h3>Build</h3><p>The products your customers and team use every day.</p></div>
+        <div class="svc-list">
+          <article class="svc">
+            <div class="svc-ico"><svg class="ico" aria-hidden="true"><use href="#i-monitor"/></svg></div>
+            <h4>Website development</h4>
+            <p>Fast, mobile-first websites and landing pages built to turn visitors into enquiries.</p>
+            <ul><li>Business sites</li><li>Landing pages</li><li>E-commerce</li><li>Redesigns</li></ul>
+          </article>
+          <article class="svc">
+            <div class="svc-ico"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg></div>
+            <h4>App development</h4>
+            <p>Android, iOS and web apps designed around how your users actually behave.</p>
+            <ul><li>Android &amp; iOS</li><li>Web apps</li><li>UI/UX design</li><li>Store launch</li></ul>
+          </article>
+          <article class="svc">
+            <div class="svc-ico"><svg class="ico" aria-hidden="true"><use href="#i-crm"/></svg></div>
+            <h4>Custom CRM &amp; product development</h4>
+            <p>When ready-made tools don’t fit, we build your own CRM, portal or full product.</p>
+            <ul><li>Custom CRM</li><li>Admin panels</li><li>Customer portals</li><li>SaaS products</li></ul>
+          </article>
+        </div>
+      </div>
+
+      <div class="group" id="g-connect">
+        <div class="group-name"><h3>Connect</h3><p>Your tools working together, so work moves on its own.</p></div>
+        <div class="svc-list">
+          <article class="svc">
+            <div class="svc-ico"><svg class="ico" aria-hidden="true"><use href="#i-flow"/></svg></div>
+            <h4>Integrations &amp; workflows</h4>
+            <p>Connect your website, payments, sheets and CRM, and automate the repetitive steps.</p>
+            <ul><li>API integrations</li><li>Payment gateways</li><li>Zapier, Make, n8n</li><li>Auto reports</li></ul>
+          </article>
+          <article class="svc">
+            <div class="svc-ico"><svg class="ico" aria-hidden="true"><use href="#i-chat"/></svg></div>
+            <h4>WhatsApp automation</h4>
+            <p>Official WhatsApp Business API with replies, orders and updates that run themselves.</p>
+            <ul><li>API setup</li><li>Chatbots</li><li>Broadcasts</li><li>Order alerts</li></ul>
+          </article>
+        </div>
+      </div>
+
+      <div class="group" id="g-grow">
+        <div class="group-name"><h3>Grow</h3><p>The plan and the reach to turn a product into a business.</p></div>
+        <div class="svc-list">
+          <article class="svc">
+            <div class="svc-ico"><svg class="ico" aria-hidden="true"><use href="#i-rocket"/></svg></div>
+            <h4>0 to 1 product strategy</h4>
+            <p>Strategy consulting for founders: validate the idea, scope the MVP, launch and win first customers.</p>
+            <ul><li>Validation</li><li>MVP roadmap</li><li>Pricing</li><li>Go-to-market</li></ul>
+          </article>
+          <article class="svc">
+            <div class="svc-ico"><svg class="ico" aria-hidden="true"><use href="#i-mega"/></svg></div>
+            <h4>Digital marketing &amp; SEO</h4>
+            <p>Get found on Google and reach the right people, with reports that show what led to sales.</p>
+            <ul><li>SEO</li><li>Google &amp; Meta Ads</li><li>Social media</li><li>Monthly reports</li></ul>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section id="process" style="border-top:1px solid var(--line)">
+    <div class="wrap">
+      <div class="head">
+        <h2>How we work</h2>
+        <p>Clear steps, a fixed quote, and progress you can see at every stage.</p>
+      </div>
+      <ol class="steps">
+        <li><h3>Free call</h3><p>We understand your business, your goals and what’s slowing you down.</p></li>
+        <li><h3>Proposal</h3><p>A clear plan with scope, timeline and cost. No surprises later.</p></li>
+        <li><h3>Build</h3><p>We design and build in stages, and you review each piece before it goes live.</p></li>
+        <li><h3>Launch and grow</h3><p>We go live, track results and keep improving with you.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Message builder -->
+  <section class="builder" id="builder">
+    <div class="wrap builder-grid">
+      <div>
+        <div class="head">
+          <h2>Get a quick quote on WhatsApp</h2>
+          <p>Pick a few options and we’ll write the message for you.</p>
+        </div>
+        <fieldset>
+          <legend>I need help with</legend>
+          <div class="options" data-group="need">
+            <input type="checkbox" id="n1" value="a website"><label for="n1">Website</label>
+            <input type="checkbox" id="n2" value="an app"><label for="n2">App</label>
+            <input type="checkbox" id="n3" value="a custom CRM or product"><label for="n3">Custom CRM / product</label>
+            <input type="checkbox" id="n4" value="integrations and workflows"><label for="n4">Integrations &amp; workflows</label>
+            <input type="checkbox" id="n5" value="WhatsApp automation"><label for="n5">WhatsApp automation</label>
+            <input type="checkbox" id="n6" value="0 to 1 product strategy"><label for="n6">0 to 1 strategy</label>
+            <input type="checkbox" id="n7" value="marketing and SEO"><label for="n7">Marketing &amp; SEO</label>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>I am</legend>
+          <div class="options" data-group="biz">
+            <input type="radio" name="biz" id="b1" value="a founder with a new idea"><label for="b1">A founder with an idea</label>
+            <input type="radio" name="biz" id="b2" value="an early-stage startup"><label for="b2">An early-stage startup</label>
+            <input type="radio" name="biz" id="b3" value="an established business"><label for="b3">An established business</label>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>I’d like to start</legend>
+          <div class="options" data-group="when">
+            <input type="radio" name="when" id="w1" value="as soon as possible"><label for="w1">As soon as possible</label>
+            <input type="radio" name="when" id="w2" value="within a month"><label for="w2">Within a month</label>
+            <input type="radio" name="when" id="w3" value="exploring"><label for="w3">Just exploring</label>
+          </div>
+        </fieldset>
+      </div>
+      <div class="preview" aria-live="polite">
+        <p class="preview-title">Your message</p>
+        <div class="bubble" id="bubble"></div>
+        <a class="btn" id="send-wa" href="#" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true"><use href="#i-wa"/></svg>Send on WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="wrap faq-grid">
+      <div class="head">
+        <h2>Questions people ask</h2>
+        <p>Can’t find your answer? <a href="https://forms.gle/BAhZ6Udea1EGyAsY9" target="_blank" rel="noopener">Send us a message</a>.</p>
+      </div>
+      <div>
+        <details>
+          <summary>Do you work with early-stage startups?</summary>
+          <p>Yes. Our 0 to 1 strategy service is built for founders. We help you validate the idea, scope an MVP you can afford, build it and plan your launch.</p>
+        </details>
+        <details>
+          <summary>Why build a custom CRM instead of using an existing one?</summary>
+          <p>Ready-made CRMs are great until your process doesn’t fit them. A custom CRM matches exactly how your team sells, has no per-user fees, and connects to your other tools the way you need.</p>
+        </details>
+        <details>
+          <summary>Do I need to use all your services?</summary>
+          <p>No. Many clients start with one, often a website, an app or an integration, and add more later. Everything we build is ready to connect when you do.</p>
+        </details>
+        <details>
+          <summary>How much does a project cost?</summary>
+          <p>It depends on what you need. After a free call we send a fixed quote, so you know the full cost before any work starts.</p>
+        </details>
+        <details>
+          <summary>Will you support us after launch?</summary>
+          <p>Yes. We offer maintenance, updates and ongoing growth support, so your website, app or system keeps improving after it goes live.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="contact" id="contact">
+    <div class="wrap">
+      <div class="contact-card">
+        <div>
+          <h2>Let’s build something that grows</h2>
+          <p>Fill in our short contact form and we’ll get back to you within one working day.</p>
+        </div>
+        <div class="contact-actions">
+          <a class="btn btn-yellow" href="https://forms.gle/BAhZ6Udea1EGyAsY9" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true"><use href="#i-form"/></svg>Fill the contact form</a>
+          <a class="btn btn-line" id="contact-wa" href="#" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true"><use href="#i-wa"/></svg>Message on WhatsApp</a>
+          <a class="mail" href="mailto:aishwarya@growthgulp.com">aishwarya@growthgulp.com</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="yr">2026</span> GrowthGulp</span>
+    <nav aria-label="Footer">
+      <a href="#services">Services</a>
+      <a href="#process">How we work</a>
+      <a href="#faq">FAQ</a>
+      <a href="https://forms.gle/BAhZ6Udea1EGyAsY9" target="_blank" rel="noopener">Contact us</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+  // Replace with your WhatsApp number: country code + number, no + or spaces
+  const WHATSAPP_NUMBER = "917776907858";
+
+  document.getElementById("yr").textContent = new Date().getFullYear();
+  document.getElementById("contact-wa").href = "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent("Hi GrowthGulp! I’d like to know more about your services.");
+
+  const bubble = document.getElementById("bubble");
+  const sendBtn = document.getElementById("send-wa");
+  const joinList = a => a.length <= 1 ? a.join("") : a.slice(0, -1).join(", ") + " and " + a[a.length - 1];
+  function buildMessage() {
+    const needs = [...document.querySelectorAll('[data-group="need"] input:checked')].map(i => i.value);
+    const biz = document.querySelector('[data-group="biz"] input:checked');
+    const when = document.querySelector('[data-group="when"] input:checked');
+    let msg = "Hi GrowthGulp!";
+    if (biz) msg += " I’m " + biz.value + ".";
+    msg += needs.length ? " I’d like help with " + joinList(needs) + "." : " I’d like to know more about your services.";
+    if (when) msg += when.value === "exploring" ? " I’m just exploring for now." : " I’d like to start " + when.value + ".";
+    msg += " Can we talk?";
+    bubble.textContent = msg;
+    sendBtn.href = "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(msg);
+  }
+  document.querySelectorAll(".options input").forEach(i => i.addEventListener("change", buildMessage));
+  buildMessage();
+</script>
+</body>
+</html>
